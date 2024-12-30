@@ -5,13 +5,13 @@ build-backend = "hatchling.build"
 [project]
 name = "beancount-importer-sjtu-ecard"
 version = "0.0.1"
-description = ''
+description = "Convert SJTU mealcard transactions to beancount file."
 requires-python = ">=3.8"
-license = "MIT"
-keywords = []
+keywords = ["sjtu", "beancount"]
 authors = [
   { name = "Bojun Ren", email = "bj.ren.coding@outlook.com" },
 ]
+readme = "README.md"
 dependencies = [
   "beancount>=2,<3",
   "beautifulsoup4==4.*",
@@ -19,23 +19,22 @@ dependencies = [
 ]
 classifiers = [
   "Development Status :: 4 - Beta",
+  "Environment :: Console",
+  "License :: OSI Approved :: MIT License",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
   "Programming Language :: Python :: Implementation :: CPython",
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
 
 [project.scripts]
 bean-extract-sjtu-ecard = "beancount_importer_sjtu_ecard:main"
-
-# [tool.hatch.build.targets.wheel]
-# include = [
-#   "/*.py",
-# ]
 
 [tool.hatch.build.targets.sdist]
 exclude = [
