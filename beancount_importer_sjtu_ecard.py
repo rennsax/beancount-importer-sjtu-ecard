@@ -15,7 +15,7 @@ from beancount.core.data import (  # type: ignore
 from beancount.core.number import D  # type: ignore
 from beancount.ingest import importer as BeancountImporter  # type: ignore
 from beancount.ingest.cache import _FileMemo
-from beancount.ingest.extract import extract_from_file, extract
+from beancount.ingest.extract import extract
 from bs4 import BeautifulSoup
 from bs4.element import Tag
 from pydantic import BaseModel
@@ -28,19 +28,26 @@ SJTU_RESTRANT_PAYEE = [
     "闵二非餐饮",
     "闵二外档",
     "闵三外档",
+    "第二餐饮大楼",
     "第四餐饮大楼",
     "第五餐饮大楼",
+]
+
+SJTU_OTHER_PAYEE = [
+    "华联鸡蛋灌饼",
 ]
 
 
 def payee_to_account(payee: str) -> str:
     """Map the SJTU ecard payee to the account."""
-    if payee in SJTU_RESTRANT_PAYEE:
-        return "Expenses:Food:School-Restaurant"
     if payee == "六期水控":
         return "Expenses:Living:Utilities"
     if payee == "":
         return "Assets:FIXME"
+    if payee in SJTU_RESTRANT_PAYEE:
+        return "Expenses:Food:School-Restaurant"
+    if payee in SJTU_OTHER_PAYEE:
+        return "Expenses:Food:Snack"
     raise ValueError(f"Unknown payee: {payee}")
 
 
@@ -165,9 +172,10 @@ class SJTUEcardImporter(BeancountImporter.ImporterProtocol):
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Extract beancount transaction from SJTU ecard payments.")
+        description="Extract beancount transaction from SJTU Ecard payments.")
 
     parser.add_argument("filename", type=str, help="input file")
+    parser.add_argument("--account", type=str, help="account name of SJTU Ecard. By default it's Assets:SJTU:Meal-Card.")
     parser.add_argument("-o", "--output", type=str, help="output file. By default, output to stdout.")
 
     args = parser.parse_args()
@@ -184,7 +192,7 @@ def main():
     file_path = file_path.absolute()
 
     extract(
-        [SJTUEcardImporter("Assets:SJTU:Meal-Card")],
+        [SJTUEcardImporter(args.account or "Assets:SJTU:Meal-Card")],
         [str(file_path)],
         output,
     )
