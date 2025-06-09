@@ -33,6 +33,12 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
 
+[project.optional-dependencies]
+test = [
+  "pytest>=8.0.0",
+  "pytest-cov",
+]
+
 [project.scripts]
 bean-extract-sjtu-ecard = "beancount_importer_sjtu_ecard:main"
 
