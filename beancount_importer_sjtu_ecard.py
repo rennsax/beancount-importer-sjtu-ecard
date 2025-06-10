@@ -4,6 +4,7 @@ from decimal import Decimal
 import sys
 import pathlib
 import argparse
+from dataclasses import dataclass
 
 from beancount.core import flags  # type: ignore
 from beancount.core.data import (  # type: ignore
@@ -18,7 +19,6 @@ from beancount.ingest.cache import _FileMemo
 from beancount.ingest.extract import extract
 from bs4 import BeautifulSoup
 from bs4.element import Tag
-from pydantic import BaseModel
 
 SJTU_RESTRANT_PAYEE = [
     "统禾",
@@ -51,7 +51,8 @@ def payee_to_account(payee: str) -> str:
     raise ValueError(f"Unknown payee: {payee}")
 
 
-class SimpleTxInformation(BaseModel):
+@dataclass
+class SimpleTxInformation:
     date: datetime.date
     time: datetime.time
     payee: str
