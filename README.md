@@ -1,5 +1,7 @@
 # SJTU 校园卡账单导入 Beancount
 
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/rennsax/beancount-importer-sjtu-ecard/test.yml?label=test)
+
 该项目用于将校园卡流水账单转换为 [Beancount](https://beancount.github.io/) 格式的 transaction。
 
 ## 安装
