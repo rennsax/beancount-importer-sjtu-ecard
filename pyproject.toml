@@ -38,8 +38,8 @@ test = [
 bean-extract-sjtu-ecard = "beancount_importer_sjtu_ecard:main"
 
 [tool.hatch.build.targets.sdist]
-exclude = [
-  "*.nix"
+include = [
+  "beancount_importer_sjtu_ecard.py"
 ]
 
 [tool.basedpyright]
